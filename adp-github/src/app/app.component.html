@@ -1,13 +1,13 @@
-<div>
-<h1 style="text-align:left"> {{title}}</h1>
-<h1 style="text-align:right"> {{username}}</h1>
-</div>
 
+<mat-card width=150x>{{commandx}}
+  <button ngxClipboard [cbContent]="commandx" style="float: right;" title="Copy code snippet" class="material-icons copy-button no-print ng-star-inserted" aria-label="">
+    <span aria-hidden="true">content_copy</span>
+  </button>
+</mat-card>
 
-<form>
-  Enter your address:<br>
-  <textarea rows="5" cols="100" width="100">
-    git config --global http.extraHeader "MFA: bearer ${{bearer}}“
-  </textarea>
-</form>
+<mat-form-field appearance="legacy">
+  <mat-label>Mat Label Example</mat-label>
+  <input matInput placeholder="Placeholder">
+</mat-form-field>
 
+<button ngxClipboard [cbContent]="comd">Copy</button>
