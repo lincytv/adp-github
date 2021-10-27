@@ -15,9 +15,12 @@ export class AppComponent {
   public bearer = "";
   public clinetid = "";
   public directoryId = "";
+<<<<<<< HEAD
   public commandx = "git config --global http.extraHeader \"MFA: bearer ${{bearer}}\“"
   public  email = new FormControl('', [Validators.required, Validators.email]);
   public comd = "";
+=======
+>>>>>>> acc549c042963ffcee08ef3a58548440cf6d8fd3
   getusername(){
     return
   }
