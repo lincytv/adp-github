@@ -1,13 +1,27 @@
+ <p>
+  <mat-toolbar>
+    <span>Allianz Github</span>
+  </mat-toolbar>
+</p>
 
-<mat-card width=150x>{{commandx}}
+<h1>Github Enterprice MFA</h1>
+  <br>
+  <h3>Copy login command to pasted directly in your terminal</h3>
+<mat-card> git config --global http.extraHeader \"MFA: bearer {{bearer}}"
   <button ngxClipboard [cbContent]="commandx" style="float: right;" title="Copy code snippet" class="material-icons copy-button no-print ng-star-inserted" aria-label="">
     <span aria-hidden="true">content_copy</span>
   </button>
 </mat-card>
-
-<mat-form-field appearance="legacy">
-  <mat-label>Mat Label Example</mat-label>
-  <input matInput placeholder="Placeholder">
-</mat-form-field>
-
-<button ngxClipboard [cbContent]="comd">Copy</button>
+<br>
+<h3> Generate token locally</h3>
+<mat-card>
+  az login --allow-no-subscriptions –use-device-code
+  <br>
+  bearer=$(az account get-access-token --resource api://d2164e2b-76d4-43e7-9ac9-1920db482e47 --output tsv --query accessToken)
+  <br>
+  {{commandx}}
+</mat-card>
+<br> To ge the token Please click the bellow button.
+<br>
+<br>
+<button (click)="login()">getToken</button>

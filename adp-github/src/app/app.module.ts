@@ -8,6 +8,20 @@ import {MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ClipboardModule } from 'ngx-clipboard';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
+import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
+
+export function MSAL_InstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication({
+   auth: {
+     clientId: 'App_Id', // lincy test
+     authority: 'https://login.microsoftonline.com/tenentId', //lincy text
+     redirectUri: 'http://localhost:4200',
+     //postLogoutRedirectUri: 'http://localhost:4200'
+   }
+  })
+}
 @NgModule({
   declarations: [
     AppComponent
@@ -20,9 +34,17 @@ import { ClipboardModule } from 'ngx-clipboard';
     MatCardModule,
     FormsModule,
     MatFormFieldModule,
-    ClipboardModule
+    ClipboardModule,
+    MatToolbarModule,
+    MsalModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSAL_InstanceFactory
+    },
+    MsalService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import  { AuthToken } from '@azure/msal-common';
-//import { MSAL_INSTANCE, MsalService } from 'msal';
+import  { AuthenticationResult, AuthToken, PopTokenGenerator } from '@azure/msal-common';
+import { MSAL_INSTANCE, MsalService } from '@azure/msal-angular';
 import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
 import {FormControl, Validators} from '@angular/forms';
 
@@ -15,14 +15,28 @@ export class AppComponent {
   public bearer = "";
   public clinetid = "";
   public directoryId = "";
-  public commandx = "git config --global http.extraHeader \"MFA: bearer ${{bearer}}\“"
+  public commandx = "git config --global http.extraHeader \"MFA: bearer ${bearer}\“"
   public  email = new FormControl('', [Validators.required, Validators.email]);
   public comd = "";
-  getusername(){
-    return
-  }
-  getcode(){
+  constructor(private msalService: MsalService) {
 
+  }
+  login(){
+    this.msalService.loginPopup().subscribe((respoonse: AuthenticationResult) => {
+      this.msalService.instance.setActiveAccount(respoonse.account)
+      this.bearer = respoonse.accessToken
+      //this.username = this.msalService.instance.
+    })
+    return this.bearer
+  }
+  getuser(){
+    let username = this.msalService.instance.getActiveAccount()?.name;
+    return username
+  }
+  getToken(){
+    console.log(this.msalService.acquireTokenPopup.name);
+    let bearer = this.msalService.instance.acquireTokenSilent
+    return bearer
   }
   // getErrorMessage() {
   //   if (this.email.hasError('required')) {
