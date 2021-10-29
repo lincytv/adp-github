@@ -3,6 +3,7 @@ import  { AuthenticationResult, AuthToken, PopTokenGenerator } from '@azure/msal
 import { MSAL_INSTANCE, MsalService } from '@azure/msal-angular';
 import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
 import {FormControl, Validators} from '@angular/forms';
+import { stringify } from 'querystring';
 
 @Component({
    selector: 'app-root',
@@ -11,11 +12,12 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class AppComponent {
   title = 'Allianz';
-  public username = "";
+  public userLogedIn : string | undefined = "";
+  public adtoken = ""
   public bearer = "";
   public clinetid = "";
-  public directoryId = "";
   public commandx = "git config --global http.extraHeader \"MFA: bearer ${bearer}\“"
+  public comdToken = "git config --global http.extraHeader \"MFA: bearer ${{bearer}}\“"
   public  email = new FormControl('', [Validators.required, Validators.email]);
   public comd = "";
   constructor(private msalService: MsalService) {
@@ -25,13 +27,16 @@ export class AppComponent {
     this.msalService.loginPopup().subscribe((respoonse: AuthenticationResult) => {
       this.msalService.instance.setActiveAccount(respoonse.account)
       this.bearer = respoonse.accessToken
-      //this.username = this.msalService.instance.
+      this.comdToken = "git config --global http.extraHeader \"MFA: bearer "+(respoonse.accessToken)+"\""
+      let userLogedIn = respoonse.account?.username
+      this.userLogedIn = userLogedIn
+      console.log(userLogedIn)
     })
-    return this.bearer
+    return this.bearer, this.userLogedIn
   }
   getuser(){
-    let username = this.msalService.instance.getActiveAccount()?.name;
-    return username
+
+    return
   }
   getToken(){
     console.log(this.msalService.acquireTokenPopup.name);

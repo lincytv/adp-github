@@ -15,8 +15,8 @@ import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-b
 export function MSAL_InstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
    auth: {
-     clientId: 'App_Id', // lincy test
-     authority: 'https://login.microsoftonline.com/tenentId', //lincy text
+     clientId: '', // lincy test
+     authority: 'https://login.microsoftonline.com/', //lincy text
      redirectUri: 'http://localhost:4200',
      //postLogoutRedirectUri: 'http://localhost:4200'
    }

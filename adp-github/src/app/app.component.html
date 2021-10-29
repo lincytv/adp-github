@@ -1,14 +1,17 @@
- <p>
-  <mat-toolbar>
-    <span>Allianz Github</span>
-  </mat-toolbar>
-</p>
-
+<nav class="navbar navbar-dark" >
+  <span class="navbar-text">
+    Allianz Github
+  </span>
+    <ul class="navbar-nav mr-auto text-center">
+      <li class="nav-item">
+          {{userLogedIn}}
+      </li>
+  </ul>
+</nav>
 <h1>Github Enterprice MFA</h1>
-  <br>
   <h3>Copy login command to pasted directly in your terminal</h3>
-<mat-card> git config --global http.extraHeader \"MFA: bearer {{bearer}}"
-  <button ngxClipboard [cbContent]="commandx" style="float: right;" title="Copy code snippet" class="material-icons copy-button no-print ng-star-inserted" aria-label="">
+<mat-card> git config --global http.extraHeader "MFA: bearer {{bearer}}"
+  <button ngxClipboard [cbContent]="comdToken" style="float: right;" title="Copy code snippet" class="material-icons copy-button no-print ng-star-inserted" aria-label="">
     <span aria-hidden="true">content_copy</span>
   </button>
 </mat-card>
@@ -17,11 +20,12 @@
 <mat-card>
   az login --allow-no-subscriptions –use-device-code
   <br>
-  bearer=$(az account get-access-token --resource api://d2164e2b-76d4-43e7-9ac9-1920db482e47 --output tsv --query accessToken)
+  bearer=$(az account get-access-token --resource api://{{adtoken}} --output tsv --query accessToken)
   <br>
   {{commandx}}
 </mat-card>
-<br> To ge the token Please click the bellow button.
 <br>
-<br>
+<h3>To ge the token Please click the bellow button.</h3>
 <button (click)="login()">getToken</button>
+
+
