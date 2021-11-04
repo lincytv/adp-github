@@ -9,23 +9,23 @@
   </ul>
 </nav>
 <h1>Github Enterprice MFA</h1>
-  <h3>Copy login command to pasted directly in your terminal</h3>
-<mat-card> git config --global http.extraHeader "MFA: bearer {{bearer}}"
-  <button ngxClipboard [cbContent]="comdToken" style="float: right;" title="Copy code snippet" class="material-icons copy-button no-print ng-star-inserted" aria-label="">
+  <h3 *ngIf="isLoggedIn()">Copy login command to pasted directly in your terminal</h3>
+<mat-card *ngIf="isLoggedIn()"> git config --global http.extraHeader "MFA: bearer {{bearer}}"
+  <button *ngIf="isLoggedIn()" ngxClipboard [cbContent]="comdToken" style="float: right;" title="Copy code snippet" class="material-icons copy-button no-print ng-star-inserted" aria-label="">
     <span aria-hidden="true">content_copy</span>
   </button>
 </mat-card>
 <br>
-<h3> Generate token locally</h3>
-<mat-card>
+<h3 *ngIf="isLoggedIn()"> Generate token locally</h3>
+<mat-card *ngIf="isLoggedIn()" >
   az login --allow-no-subscriptions –use-device-code
-  <br>
+  <br *ngIf="isLoggedIn()">
   bearer=$(az account get-access-token --resource api://{{adtoken}} --output tsv --query accessToken)
   <br>
   {{commandx}}
 </mat-card>
 <br>
-<h3 *ngIf="!isLoggedIn()">To ge the token Please click the bellow button.</h3>
+<!-- <h3 *ngIf="!isLoggedIn()">To ge the token Please click the bellow button.</h3>
 <button *ngIf="!isLoggedIn()" (click)="login()">getToken</button>
-
+ -->
 

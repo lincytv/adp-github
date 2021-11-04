@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   title = 'Allianz';
   public userLogedIn : string | undefined = "";
   public adtoken = ""
-  public bearer = "";
+  public bearer : string | undefined  = "";
   public clinetid = "";
   public commandx = "git config --global http.extraHeader \"MFA: bearer ${bearer}\“"
   public comdToken = "git config --global http.extraHeader \"MFA: bearer ${{bearer}}\“"
@@ -27,19 +27,33 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(){
-      this.login();
-      this.callProfile();
-  }
-  login(){
-    this.msalService.loginPopup().subscribe((respoonse: AuthenticationResult) => {
-      this.msalService.instance.setActiveAccount(respoonse.account)
-      this.bearer = respoonse.accessToken
-      this.comdToken = "git config --global http.extraHeader \"MFA: bearer "+(respoonse.accessToken)+"\""
-      let userLogedIn = respoonse.account?.username
+      this.loginredir();
+     this.msalService.instance.handleRedirectPromise().then(res => {
+      if (res != null && res.account != null ) {
+      this.msalService.instance.setActiveAccount(res.account)
+      this.bearer = res.accessToken
+      this.comdToken = "git config --global http.extraHeader \"MFA: bearer "+(this.bearer)+"\""
+      let userLogedIn = res.account?.username
       this.userLogedIn = userLogedIn
       console.log(userLogedIn)
-    })
-    return this.bearer, this.userLogedIn
+      }
+     })
+
+  }
+  // login(){
+  //   this.msalService.loginPopup().subscribe((respoonse: AuthenticationResult) => {
+  //     this.msalService.instance.setActiveAccount(respoonse.account)
+  //     this.bearer = respoonse.accessToken
+  //     this.comdToken = "git config --global http.extraHeader \"MFA: bearer "+(this.bearer)+"\""
+  //     let userLogedIn = respoonse.account?.username
+  //     this.userLogedIn = userLogedIn
+  //     console.log(userLogedIn)
+  //   })
+  //   return this.bearer, this.userLogedIn
+  // }
+  loginredir(){
+   this.msalService.loginRedirect();
+
   }
   getuser(){
 
@@ -48,11 +62,11 @@ export class AppComponent implements OnInit {
   isLoggedIn(): boolean {
     return this.msalService.instance.getActiveAccount() != null
   }
-  getToken(){
-    console.log(this.msalService.acquireTokenPopup.name);
-    let bearer = this.msalService.instance.acquireTokenSilent
-    return bearer
-  }
+  // getToken(){
+  //   console.log(this.msalService.acquireTokenPopup.name);
+  //   let bearer = this.msalService.instance.acquireTokenSilent
+  //   return bearer
+  // }
   callProfile() {
     this.httpClient.get("https://graph.microsoft-ppe.com/v1.0/me").subscribe(res => {
       this.apiResponse = JSON.stringify(res)

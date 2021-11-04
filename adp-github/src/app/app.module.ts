@@ -14,13 +14,14 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { MsalGuard, MsalInterceptor, MsalBroadcastService, MsalInterceptorConfiguration, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
 import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 export function MSAL_InstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
    auth: {
-     clientId: '', // lincy test
-     authority: 'https://login.microsoftonline.com/', //lincy text
-     redirectUri: 'http://localhost:4200',
+     clientId: environment.clientId, // lincy test
+     authority: environment.authority, //lincy text
+     redirectUri: environment.redirectUri
      //postLogoutRedirectUri: 'http://localhost:4200'
    }
   })
@@ -77,6 +78,6 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
       useFactory: MSALInterceptorConfigFactory
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, MsalRedirectComponent]
 })
 export class AppModule { }
