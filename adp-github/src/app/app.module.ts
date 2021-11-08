@@ -19,10 +19,9 @@ import { environment } from 'src/environments/environment';
 export function MSAL_InstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
    auth: {
-     clientId: environment.clientId, // lincy test
-     authority: environment.authority, //lincy text
+     clientId: environment.clientId,
+     authority: environment.authority,
      redirectUri: environment.redirectUri
-     //postLogoutRedirectUri: 'http://localhost:4200'
    }
   })
 }

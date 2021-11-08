@@ -22,10 +22,6 @@
   <br *ngIf="isLoggedIn()">
   bearer=$(az account get-access-token --resource api://{{adtoken}} --output tsv --query accessToken)
   <br>
-  {{commandx}}
+  "git config --global http.extraHeader "MFA: bearer $bearer“"
 </mat-card>
 <br>
-<!-- <h3 *ngIf="!isLoggedIn()">To ge the token Please click the bellow button.</h3>
-<button *ngIf="!isLoggedIn()" (click)="login()">getToken</button>
- -->
-
